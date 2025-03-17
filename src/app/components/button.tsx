@@ -2,11 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
-
-
 const GeneratePasswordButton = () => {
   const [password, setPassword] = useState("empty");
   const [length, setLength] = useState(12);
+  const [copied, setCopied] = useState(false);
 
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
 
@@ -19,8 +18,16 @@ const GeneratePasswordButton = () => {
         console.log(newPassword);
     }
     console.log(password);
+  };
 
-
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(password);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
   };
 
   return (
@@ -38,9 +45,17 @@ const GeneratePasswordButton = () => {
           Generate Password
         </span>
       </button>
-      <div className='pt-5 text-white'>
+      <div 
+        className='pt-5 text-white cursor-pointer hover:text-blue-300 transition-colors duration-200 relative'
+        onClick={copyToClipboard}
+      >
         {password}
-    </div>
+        {copied && (
+          <span className="absolute -right-20 top-5 text-sm text-green-400">
+            Copied!
+          </span>
+        )}
+      </div>
     </motion.div>
   );
 };
