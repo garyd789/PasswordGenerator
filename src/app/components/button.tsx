@@ -46,7 +46,7 @@ const GeneratePasswordButton = () => {
         </span>
       </button>
       <div 
-        className='pt-5 text-white cursor-pointer hover:text-blue-300 transition-colors duration-200 relative'
+        className='pt-5 text-white cursor-pointer hover:text-blue-300 transition-colors duration-200 relative italic'
         onClick={copyToClipboard}
       >
         {password}
